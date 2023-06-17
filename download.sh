@@ -11,13 +11,15 @@ jq -r '. | to_entries | .[] | [.key]+.value | @tsv' metadata.json |
       readarray -d $'\t' -t info < <(printf '%s' "$line")
       target_dir="$work"/"${info[0]}"
       mkdir -p "$target_dir"
-      wget --random-wait -P "$target_dir" "${info[@]:1}"
+      wget --random-wait -N -P "$target_dir" "${info[@]:1}"
       sleep 1
   done
 
 dt="$(date -Iseconds)"
-cp -a "$work" blend-"$dt"/
 
-zip -r blend-"$dt".zip blend-"$dt"/
+target_dir=blend-"$dt"/
+zipfile=blend-"$dt".zip
 
-rm -rf "$work"
+ln -s "$work" "$target_dir"
+zip -r "$zipfile" "$target_dir"
+rm "$target_dir"
