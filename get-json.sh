@@ -1,1 +1,1 @@
-curl -fsSL -H @headers.in https://blendassen.nl/ledenpagina/ | htmlq -- 'div.fusion-fullwidth:nth-child(2) > div:nth-child(1) > .fusion-layout-column > .fusion-column-wrapper' | pandoc -f html -t json | python pretty-json.py > blend-assen.json
+curl -fsSL -H @headers.in https://blendassen.nl/ledenpagina/ | htmlq -- 'div.fusion-fullwidth:nth-child(2) > div:nth-child(1) > .fusion-layout-column > .fusion-column-wrapper' | pandoc -f html -t json --lua-filter convert-to-dict.lua | python pretty-json.py > metadata.json
