@@ -1,13 +1,16 @@
 #!/bin/bash
 
-set -eu
-
 tempfiles=()
 
-read -p 'Prefix > ' prefix
+PREFIX="$1"
+
+set -eu
+if [ -z "$PREFIX" ]; then
+    read -p 'Prefix > ' PREFIX
+fi
 
 evaluate() {
-    eval $1="$prefix"-"$1".zip
+    eval $1="$PREFIX"-"$1".zip
     listvar=${1}_list
     temp="$(mktemp)"
     tempfiles+=("$temp")
