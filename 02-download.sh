@@ -15,7 +15,7 @@ jq -r '. | to_entries | .[] | [.key]+.value | @tsv' metadata.json |
       sleep 1
   done
 
-dt="$(date -Iseconds)"
+dt="$(date -Iseconds | tr '|\\?*<\":>+[]/' '_')"
 
 target_dir=blend-"$dt"
 zipfile=blend-"$dt".zip
